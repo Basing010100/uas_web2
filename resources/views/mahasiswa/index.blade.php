@@ -19,9 +19,9 @@
         <thead>
             <tr>
                 <th class="col-md-1">No</th>
-                <th class="col-md-3">NIM</th>
+                <th class="col-md-3">NPM</th>
                 <th class="col-md-4">Nama</th>
-                <th class="col-md-2">Jurusan</th>
+                <th class="col-md-2">alamat</th>
                 <th class="col-md-2">Aksi</th>
             </tr>
         </thead>
@@ -30,12 +30,12 @@
             @foreach ($data as $item)
             <tr>
                 <td>{{ $i }}</td>
-                <td>{{ $item->nim }}</td>
+                <td>{{ $item->npm }}</td>
                 <td>{{ $item->nama }}</td>
-                <td>{{ $item->jurusan }}</td>
+                <td>{{ $item->alamat }}</td>
                 <td>
-                    <a href='{{ url('mahasiswa/'.$item->nim.'/edit') }}' class="btn btn-warning btn-sm">Edit</a>
-                    <form onsubmit="return confirm('Yakin akan menghapus data?')" class='d-inline' action="{{ url('mahasiswa/'.$item->nim) }}" method="post">
+                    <a href='{{ url('mahasiswa/'.$item->npm.'/edit') }}' class="btn btn-warning btn-sm">Edit</a>
+                    <form onsubmit="return confirm('Yakin akan menghapus data?')" class='d-inline' action="{{ url('mahasiswa/'.$item->npm) }}" method="post">
                         @csrf 
                         @method('DELETE')
                         <button type="submit" name="submit" class="btn btn-danger btn-sm">Del</button>

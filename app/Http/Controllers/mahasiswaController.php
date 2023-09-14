@@ -18,12 +18,12 @@ class mahasiswaController extends Controller
         $katakunci = $request->katakunci;
         $jumlahbaris = 4;
         if (strlen($katakunci)) {
-            $data = mahasiswa::where('nim', 'like', "%$katakunci%")
+            $data = mahasiswa::where('npm', 'like', "%$katakunci%")
                 ->orWhere('nama', 'like', "%$katakunci%")
-                ->orWhere('jurusan', 'like', "%$katakunci%")
+                ->orWhere('alamat', 'like', "%$katakunci%")
                 ->paginate($jumlahbaris);
         } else {
-            $data = mahasiswa::orderBy('nim', 'desc')->paginate($jumlahbaris);
+            $data = mahasiswa::orderBy('npm', 'desc')->paginate($jumlahbaris);
         }
         return view('mahasiswa.index')->with('data', $data);
     }
@@ -46,25 +46,25 @@ class mahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        Session::flash('nim', $request->nim);
+        Session::flash('npm', $request->npm);
         Session::flash('nama', $request->nama);
-        Session::flash('jurusan', $request->jurusan);
+        Session::flash('alamat', $request->alamat);
 
         $request->validate([
-            'nim' => 'required|numeric|unique:mahasiswa,nim',
+            'npm' => 'required|numeric|unique:mahasiswa,npm',
             'nama' => 'required',
-            'jurusan' => 'required',
+            'alamat' => 'required',
         ], [
-            'nim.required' => 'NIM wajib diisi',
-            'nim.numeric' => 'NIM wajib dalam angka',
-            'nim.unique' => 'NIM yang diisikan sudah ada dalam database',
+            'npm.required' => 'NPM wajib diisi',
+            'npm.numeric' => 'NPM wajib dalam angka',
+            'npm.unique' => 'NPM yang diisikan sudah ada dalam database',
             'nama.required' => 'Nama wajib diisi',
-            'jurusan.required' => 'Jurusan wajib diisi',
+            'alamat.required' => 'Alamat wajib diisi',
         ]);
         $data = [
-            'nim' => $request->nim,
+            'npm' => $request->npm,
             'nama' => $request->nama,
-            'jurusan' => $request->jurusan,
+            'alamat' => $request->alamat,
         ];
         mahasiswa::create($data);
         return redirect()->to('mahasiswa')->with('success', 'Berhasil menambahkan data');
@@ -89,7 +89,7 @@ class mahasiswaController extends Controller
      */
     public function edit($id)
     {
-        $data = mahasiswa::where('nim', $id)->first();
+        $data = mahasiswa::where('npm', $id)->first();
         return view('mahasiswa.edit')->with('data', $data);
     }
 
@@ -104,16 +104,16 @@ class mahasiswaController extends Controller
     {
         $request->validate([
             'nama' => 'required',
-            'jurusan' => 'required',
+            'alamat' => 'required',
         ], [
             'nama.required' => 'Nama wajib diisi',
-            'jurusan.required' => 'Jurusan wajib diisi',
+            'alamat.required' => 'Alamat wajib diisi',
         ]);
         $data = [
             'nama' => $request->nama,
-            'jurusan' => $request->jurusan,
+            'alamat' => $request->alamat,
         ];
-        mahasiswa::where('nim', $id)->update($data);
+        mahasiswa::where('npm', $id)->update($data);
         return redirect()->to('mahasiswa')->with('success', 'Berhasil melakukan update data');
     }
 
@@ -125,7 +125,7 @@ class mahasiswaController extends Controller
      */
     public function destroy($id)
     {
-        mahasiswa::where('nim', $id)->delete();
+        mahasiswa::where('npm', $id)->delete();
         return redirect()->to('mahasiswa')->with('success', 'Berhasil melakukan delete data');
     }
 }
